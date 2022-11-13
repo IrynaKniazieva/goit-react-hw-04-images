@@ -1,4 +1,5 @@
 import React from "react"
+// import React, { useState, useEffect } from "react"
 import { Section } from './App.styled';
 import Modal from "../Modal/Modal";
 import Searchbar from "../Searchbar/Searchbar";
@@ -6,8 +7,58 @@ import ImageGallery from "../ImageGallery/ImageGallery";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import { fetchImagesWithQuery } from "services/API";
+// import { useEffect, useState } from 'react';
+
+// export default function App () {
+//   const [images, setImages] = useState([]);
+//   const [query, setQuery] = useState('');
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState(null);
+//   const [page, setPage] = useState(1);
+//   const [largeImage, setLargeImage] = useState('');
+//   const [showButton, setShowButton] = useState(false);
+//   const [totalHits, setTotalHits] = useState(0);
+
+//   useEffect(() => {
+//     fetchImagesWithQuery(query, page).then(res => {
+//       setImages(prevImages => [...prevImages, ...res.data.hits]);
+//       setTotalHits(res.data.totalHits);
+//       setQuery(query);
+//     }
+//     )
+//   },[query, page]);
+
+//    const handleFormSubmit = query => {
+//     setQuery(query);
+//     setPage(1);
+//     setImages([]);
+//   };
 
 
+//   return (
+//       <>
+//         <Searchbar onSubmit={handleFormSubmit} />
+//         {/* <p>{this.state.searchQuery}</p> */}
+
+//         {error && <p>Whoops, something went wrong: {error.message}</p>}
+        
+//         {loading && <p>Загружаю...</p>}
+//         {images.length > 0 && (
+//         // <p>{this.state.searchQuery}</p>
+//         <ImageGallery onSelect={this.ImageClick} images={images}/>
+//         )}
+//          {!loading && (
+//               <Button text="Load More" clickHandler={this.loadMore} />
+//             )}
+//         <div>
+//           {largeImage.length > 0 && (
+//             <Modal imageModal={largeImage} closeModal={this.onClose} />
+//           )}
+//         </div>
+//         {/* <ToastContainer autoClose={3000}/> */}
+//       </>
+//     );
+// }
 
 class App extends React.Component {
   state = {
