@@ -9,7 +9,7 @@ import Loader from "../Loader/Loader";
 import { fetchImagesWithQuery } from "services/API";
 // import { useEffect, useState } from 'react';
 
-export default function App () {
+export default function App() {
   const [images, setImages] = useState([]);
   const [query, setQuery] = useState('');
   // const [loading, setLoading] = useState(false);
@@ -21,6 +21,7 @@ export default function App () {
   const [status, setStatus] = useState('idle');
 
   useEffect(() => {
+    // перший render
     if (query === '') {
       return;
     }
@@ -29,21 +30,20 @@ export default function App () {
       try {
         const res = await fetchImagesWithQuery(query, page);
         if (page === 1) {
-          setImages(res.data.hits)
+          setImages(res.data.hits);
         } else {
           setImages(prevState => [...prevState, ...res.data.hits]);
         }
-          setTotalHits(res.data.totalHits);
-          setQuery(query);
-          setStatus('resolved');
-        
+        setTotalHits(res.data.totalHits);
+        setQuery(query);
+        setStatus('resolved');
       } catch (error) {
-        setError( error);
+        setError(error);
         setStatus('rejected');
       }
-    }; fetchImages()}, [query, page]
-    )
-
+    };
+    fetchImages();
+  }, [query, page]);
 
   const handleFormSubmit = query => {
     setQuery(query);
@@ -52,61 +52,59 @@ export default function App () {
   };
 
   const loadMore = () => {
-    setPage(prevPage => prevPage + 1)
+    setPage(prevPage => prevPage + 1);
   };
 
-const imageClick = largeImageURL => {
-  setLargeImage(largeImageURL);
+  const imageClick = largeImageURL => {
+    setLargeImage(largeImageURL);
   };
 
-    const onClose = () => {
-      setLargeImage('')
+  const onClose = () => {
+    setLargeImage('');
   };
-
- 
 
   if (status === 'idle') {
-        return (
-        <Section>
-          <Searchbar onSubmit={handleFormSubmit} />
-          {/* <MessageError message={"Введіть назву для пошуку"}/> */}
-        </Section>
-      );
-    }
-    // -----Спинер/загрузка-----
-    if (status === 'pending') {
-      return (
-        <Section>
-          <Searchbar onSubmit={handleFormSubmit} />
-          <ImageGallery onSelect={imageClick} images={images} />
-          <Loader />
-        </Section>
-      );
-    }
-    // ----якщо помилка-----
-    if (status === 'rejected') {
-      return (
-        <Section>
-          <Searchbar onSubmit={handleFormSubmit} />
-          {error && <p>Whoops, something went wrong: {error.message}</p>}
-        </Section>
-      );
-    }
-    // ----правильний запрос, все працює-----
-    if (status === 'resolved') {
-      return (
-        <Section>
-          <Searchbar onSubmit={handleFormSubmit} />
-          <ImageGallery onSelect={imageClick} images={images} />
-          {largeImage.length > 0 && (
-            <Modal imageModal={largeImage} closeModal={onClose} />
-          )}
-          {images.length !== totalHits && (
-            <Button text="Load More..." clickHandler={loadMore} />
-          )}
-        </Section>
-      );
-}
+    return (
+      <Section>
+        <Searchbar onSubmit={handleFormSubmit} />
+        {/* <MessageError message={"Введіть назву для пошуку"}/> */}
+      </Section>
+    );
+  }
+  // -----Спинер/загрузка-----
+  if (status === 'pending') {
+    return (
+      <Section>
+        <Searchbar onSubmit={handleFormSubmit} />
+        <ImageGallery onSelect={imageClick} images={images} />
+        <Loader />
+      </Section>
+    );
+  }
+  // ----якщо помилка-----
+  if (status === 'rejected') {
+    return (
+      <Section>
+        <Searchbar onSubmit={handleFormSubmit} />
+        {error && <p>Whoops, something went wrong: {error.message}</p>}
+      </Section>
+    );
+  }
+  // ----правильний запрос, все працює-----
+  if (status === 'resolved') {
+    return (
+      <Section>
+        <Searchbar onSubmit={handleFormSubmit} />
+        <ImageGallery onSelect={imageClick} images={images} />
+        {largeImage.length > 0 && (
+          <Modal imageModal={largeImage} closeModal={onClose} />
+        )}
+        {images.length !== totalHits && (
+          <Button text="Load More..." clickHandler={loadMore} />
+        )}
+      </Section>
+    );
+  }
 }
 
 

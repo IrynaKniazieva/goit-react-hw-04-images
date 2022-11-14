@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './ImageGalleryItem.module.css';
 import PropTypes from 'prop-types';
 
-const ImageGalleryItem = ({ largeImageURL, webformatURL, id, onSelect }) => (
+const ImageGalleryItem = ({ largeImageURL, webformatURL, onSelect }) => (
   <li
-    key={id}
+  
     className={styles.imageGalleryItem}
     onClick={() => onSelect(largeImageURL)}
   >
@@ -13,7 +13,7 @@ const ImageGalleryItem = ({ largeImageURL, webformatURL, id, onSelect }) => (
 );
 
 ImageGalleryItem.propTypes = {
-  id: PropTypes.number,
+
   largeImageURL: PropTypes.string.isRequired,
   webformatURL: PropTypes.string.isRequired,
   onSelect: PropTypes.func.isRequired,
